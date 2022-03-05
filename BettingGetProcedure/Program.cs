@@ -14,6 +14,7 @@ namespace BettingGetProcedure
         private static IMongoCollection<Match> _matchCollection;
         private static bool error = false;
         private static string errorList = "";
+        private static DateTime time = DateTime.Now;
 
         public static void Main(string[] args)
         {
@@ -56,7 +57,7 @@ namespace BettingGetProcedure
         {
             MailMessage message = new MailMessage("errorbetapp@gmail.com", "errorbetapp@gmail.com");
             message.Subject = "Errori nella procedura di importazione";
-            message.Body = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + "\n\n"+ errorList;
+            message.Body = time.ToString("dd/MM/yyyy HH:mm:ss") + "\n\n"+ errorList;
             var gmailClient = new SmtpClient
             {
                 Host = "smtp.gmail.com",
@@ -110,7 +111,7 @@ namespace BettingGetProcedure
                 {
                     H2h = site.odds.h2h,
                     LayH2h = site.odds.h2h_lay,
-                    Time = DateTime.Now,
+                    Time = time,
                 });
                 currentSites.Add(new Site
                 {
@@ -157,7 +158,7 @@ namespace BettingGetProcedure
                 {
                     H2h = elem.odds.h2h,
                     LayH2h = elem.odds.h2h_lay,
-                    Time = DateTime.Now,
+                    Time = time,
                 };
 
                 if (_matchCollection.Find(filter).FirstOrDefault() != null)
